@@ -9,6 +9,16 @@ class Player:
         self.raw_scores = []
     def add_score(self, score):
         self.raw_scores.append(score)
+    def acumulate_scores(self):
+        raw_scores_np = np.array(self.raw_scores, np.float)
+        raw_scores_np[np.isnan(raw_scores_np)] = 0
+        print(raw_scores_np)
+        cumulative_scores = []
+        for i in range(len(self.raw_scores)):
+            cumulative_scores.append(0)
+            for j in range(i+1):
+                cumulative_scores[i] += raw_scores_np[j]
+        self.cumu_scores = cumulative_scores
     def add_colour(self, colour):
         self.colour = colour
     def filter_scores(self):
@@ -19,6 +29,8 @@ class Player:
         rounds += 1
         idx = np.isfinite(np.array(self.raw_scores, np.float))
         self.played_rounds = np.ma.masked_equal(np.array(rounds*idx),0).compressed()
+    def all_rounds(self):
+        return np.arange(len(self.raw_scores))
         
 
 
@@ -51,31 +63,18 @@ players["airns"].add_colour("gold")
 players["kirk"].add_colour("tab:cyan")
 players["frew"].add_colour("magenta")
 
-#scores_brns_mod = players["burns"].scores
-#scores_bckt_mod = players["beckett"].scores
-
-
-# linear fit
-# for key, player in players.items():
-#     player.filter_rounds()
-#     player.filter_scores()
-#     #print(player.name,":", player.scores, player.played_rounds)
-    
-#     plt.plot(player.played_rounds, player.scores, 'o', label=key.format('o'), color=player.colour)
-#     function = np.poly1d(np.polyfit(player.played_rounds, player.scores, 1))
-#     plt.plot((1, len(player.raw_scores)), (function(1), function(len(player.raw_scores))),color=player.colour)
-
 
 for key, player in players.items():
     player.filter_rounds()
     player.filter_scores()
-    print(player.name,":", player.scores, player.played_rounds)
-    
-    plt.plot(player.played_rounds, player.scores, label=key.format('o'), color=player.colour)
-    plt.plot(player.played_rounds, player.scores, 'o', color=player.colour)
-
+    print(player.name,":", player.scores, player.played_rounds)    
+    player.acumulate_scores()
+    print("cumu:", player.cumu_scores)
     
     
+for key, player in players.items():
+    plt.plot(player.all_rounds(), player.cumu_scores, label=key.format('o'), color=player.colour)
+    plt.plot(player.all_rounds(), player.cumu_scores, 'o', color=player.colour)
 plt.legend(numpoints=1)
-
-plt.show()
+#plt.show()
+plt.savefig('bar.pdf')
