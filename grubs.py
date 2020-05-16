@@ -75,39 +75,41 @@ plt.rc('xtick', labelsize=BIGGER_SIZE)    # fontsize of the tick labels
 plt.rc('ytick', labelsize=BIGGER_SIZE)    # fontsize of the tick labels
 plt.rc('legend', fontsize=MEDIUM_SIZE)    # legend fontsize
 plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
-
-
-# old scores
 X = float('nan')
-#quiz_1 = [[],[],[],[],[],[]]
+####################################################################
+players_names = ["burns", "beckett", "waz", "airns", "kirk", "frew"]
 n_players = 6
-n_rounds = 3
-#quiz_1 = [[] for x in xrange(n_rounds)]
+n_rounds = 4
 quiz_1 = np.empty((n_rounds, 0)).tolist()
 
-
-players_names = ["burns", "beckett", "waz", "airns", "kirk", "frew"]
-
-
-#########    brns, bckt, wazz, arns, kirk, frew
+#########    brns, bckt, wazz, arns, kirk, frew, ash
 filename="grubs.pdf"
 quiz_1[0] = (9612, X   , 8094, 5612, 6634, 5135)
 quiz_1[1] = (X   , 5228, 6386, 3631, 3346, 1688)
 quiz_1[2] = (8867, 7904, 8043, X   , 5847, 6620)
-#quiz_1[3] = (9207, 9775, 2812, 5630, 5266, X   )
+quiz_1[3] = (9207, 9775, 2812, 5630, 5266, X   )
 # quiz_1[4] = (9254, 4953, X   , 5769, 5919, 5597)
 # quiz_1[5] = (8776, 7751, 7361, 8850, X   , 7276)
 
+# quiz_1[0] = (0000, 0000, 0000, 0000, 0000, 0000)
+# quiz_1[1] = (0000, 0000, 0000, 0000, 0000, 0000)
+# quiz_1[2] = (0000, 0000, 0000, 0000, 0000, 0000)
+# quiz_1[3] = (0000, 0000, 0000, 0000, 0000, 0000)
+# quiz_1[4] = (0000, 0000, 0000, 0000, 0000, 0000)
+# quiz_1[5] = (0000, 0000, 0000, 0000, 0000, 0000)
+# quiz_1[6] = (0000, 0000, 0000, 0000, 0000, 0000)
+# quiz_1[7] = (0000, 0000, 0000, 0000, 0000, 0000)
+
 titles = {
     "burns"   : "The Champ Champ",
-    "beckett" : "tommyBBBBBBBB",
+    "beckett" : "tommyB",
     "waz"     : "Neil The Deal",
     "airns"   : "Panda",
     "kirk"    : "DDDD",
-    "frew"    : "ferew",
+    "frew"    : "Ferew",
     "ash"     : "the malbo man"
 }
-
+#######################################################################
 players = {}
 for i, nm in enumerate(players_names):
     name = nm
@@ -184,7 +186,7 @@ for key, player in players.items():
 
     plt.subplot(326)
     f_rnd = len(player.cumu_w_scores) - 1
-    plt.xticks(rotation=20)
+    plt.xticks(rotation=10)
     plt.grid(True)
     plt.bar(player.name, player.cumu_w_scores, color=player.colour)
     plt.annotate(round(player.cumu_w_scores[f_rnd],0), (player.name, player.cumu_w_scores[f_rnd]))
