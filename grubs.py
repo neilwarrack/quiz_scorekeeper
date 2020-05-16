@@ -77,37 +77,31 @@ plt.rc('legend', fontsize=MEDIUM_SIZE)    # legend fontsize
 plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 X = float('nan')
 ####################################################################
-players_names = ["burns", "beckett", "waz", "airns", "kirk", "frew"]
-n_players = 6
-n_rounds = 4
+players_names = ["burns", "beckett", "waz", "airns", "kirk", "frew", "ash"]
+n_players = 7
+n_rounds = 2
 quiz_1 = np.empty((n_rounds, 0)).tolist()
 
 #########    brns, bckt, wazz, arns, kirk, frew, ash
 filename="grubs.pdf"
-quiz_1[0] = (9612, X   , 8094, 5612, 6634, 5135)
-quiz_1[1] = (X   , 5228, 6386, 3631, 3346, 1688)
-quiz_1[2] = (8867, 7904, 8043, X   , 5847, 6620)
-quiz_1[3] = (9207, 9775, 2812, 5630, 5266, X   )
-# quiz_1[4] = (9254, 4953, X   , 5769, 5919, 5597)
-# quiz_1[5] = (8776, 7751, 7361, 8850, X   , 7276)
 
-# quiz_1[0] = (0000, 0000, 0000, 0000, 0000, 0000)
-# quiz_1[1] = (0000, 0000, 0000, 0000, 0000, 0000)
-# quiz_1[2] = (0000, 0000, 0000, 0000, 0000, 0000)
-# quiz_1[3] = (0000, 0000, 0000, 0000, 0000, 0000)
-# quiz_1[4] = (0000, 0000, 0000, 0000, 0000, 0000)
-# quiz_1[5] = (0000, 0000, 0000, 0000, 0000, 0000)
-# quiz_1[6] = (0000, 0000, 0000, 0000, 0000, 0000)
-# quiz_1[7] = (0000, 0000, 0000, 0000, 0000, 0000)
+quiz_1[0] = (7632, 5591, 2748, 9177, 10923, X   , 4362)
+quiz_1[1] = (8853, X   , 4591, 5767, 5442, 1630, 8961)
+# quiz_1[2] = (0000, 0000, 0000, 0000, 0000, 0000, 0000)
+# quiz_1[3] = (0000, 0000, 0000, 0000, 0000, 0000, 0000)
+# quiz_1[4] = (0000, 0000, 0000, 0000, 0000, 0000, 0000)
+# quiz_1[5] = (0000, 0000, 0000, 0000, 0000, 0000, 0000)
+# quiz_1[6] = (0000, 0000, 0000, 0000, 0000, 0000, 0000)
+
 
 titles = {
     "burns"   : "The Champ Champ",
-    "beckett" : "tommyB",
+    "beckett" : "Quizzee Pascale",
     "waz"     : "Neil The Deal",
-    "airns"   : "Panda",
-    "kirk"    : "DDDD",
-    "frew"    : "Ferew",
-    "ash"     : "the malbo man"
+    "airns"   : "Marvellous Mattz",
+    "kirk"    : "Zoro",
+    "frew"    : "Cunning Chris Roberts",
+    "ash"     : "Quiz-BomB"
 }
 #######################################################################
 players = {}
@@ -125,6 +119,7 @@ players["waz"].add_colour("green") # indigo
 players["airns"].add_colour("brown") # gold
 players["kirk"].add_colour("tab:cyan")
 players["frew"].add_colour("magenta")
+players["ash"].add_colour("indigo")
 
 
 
@@ -179,14 +174,14 @@ for key, player in players.items():
 
     plt.subplot(325)
     f_rnd = len(player.cumu_scores) - 1
-    plt.xticks(rotation=10)
+    plt.xticks(rotation=15)
     plt.grid(True)
     plt.bar(player.name, player.cumu_scores, color=player.colour)
     plt.annotate(round(player.cumu_scores[f_rnd],0), (player.name, player.cumu_scores[f_rnd]))
 
     plt.subplot(326)
     f_rnd = len(player.cumu_w_scores) - 1
-    plt.xticks(rotation=10)
+    plt.xticks(rotation=15)
     plt.grid(True)
     plt.bar(player.name, player.cumu_w_scores, color=player.colour)
     plt.annotate(round(player.cumu_w_scores[f_rnd],0), (player.name, player.cumu_w_scores[f_rnd]))
