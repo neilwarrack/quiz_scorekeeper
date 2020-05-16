@@ -69,11 +69,11 @@ SMALL_SIZE = 8
 MEDIUM_SIZE = 10
 BIGGER_SIZE = 12
 plt.rc('font', size=BIGGER_SIZE)          # controls default text sizes
-plt.rc('axes', titlesize=SMALL_SIZE)     # fontsize of the axes title
-plt.rc('axes', labelsize=MEDIUM_SIZE)    # fontsize of the x and y labels
-plt.rc('xtick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
-plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
-plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
+plt.rc('axes', titlesize=BIGGER_SIZE)     # fontsize of the axes title
+plt.rc('axes', labelsize=BIGGER_SIZE)    # fontsize of the x and y labels
+plt.rc('xtick', labelsize=BIGGER_SIZE)    # fontsize of the tick labels
+plt.rc('ytick', labelsize=BIGGER_SIZE)    # fontsize of the tick labels
+plt.rc('legend', fontsize=MEDIUM_SIZE)    # legend fontsize
 plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
 
@@ -99,8 +99,8 @@ quiz_1[2] = (8867, 7904, 8043, X   , 5847, 6620)
 # quiz_1[5] = (8776, 7751, 7361, 8850, X   , 7276)
 
 titles = {
-    "burns"   : "The Champ Champ Champ",
-    "beckett" : "tommyBBBBBBBBBBBBBBBBBBB",
+    "burns"   : "The Champ Champ",
+    "beckett" : "tommyBBBBBBBB",
     "waz"     : "Neil The Deal",
     "airns"   : "Panda",
     "kirk"    : "DDDD",
@@ -159,7 +159,7 @@ for key, player in players.items():
     plt.subplot(323)
     plt.plot(player.all_rounds(), player.cumu_scores, label=player.name.format('o'), color=player.colour)
     plt.plot(player.all_rounds(), player.cumu_scores, 'o', color=player.colour)
-    plt.legend(loc=0)
+    plt.legend(loc=0, bbox_to_anchor=[0.275, 1.1 ])
     plt.grid(True)
     
     # plot weighted scores
@@ -177,7 +177,7 @@ for key, player in players.items():
 
     plt.subplot(325)
     f_rnd = len(player.cumu_scores) - 1
-    plt.xticks(rotation=20)
+    plt.xticks(rotation=10)
     plt.grid(True)
     plt.bar(player.name, player.cumu_scores, color=player.colour)
     plt.annotate(round(player.cumu_scores[f_rnd],0), (player.name, player.cumu_scores[f_rnd]))
