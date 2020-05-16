@@ -53,7 +53,7 @@ def weight(players, rnd):
     for key, pl in players.items():
         pl_av = 0
         rnd_plyd = 0
-        for i in range(rnd):
+        for i in range(len(pl.raw_scores)):
             if not math.isnan(pl.raw_scores[i]):
                 pl_av += pl.raw_scores[i]
                 rnd_plyd += 1
@@ -70,12 +70,49 @@ def weight(players, rnd):
 X = float('nan')
 quiz_1 = [[],[],[],[],[],[]]
 #########    brns, bckt, wazz, arns, kirk, frew
-quiz_1[0] = (9612, X   , 8094, 5612, 6634, 5135)
-quiz_1[1] = (X   , 5228, 6386, 3631, 3346, 1688)
-quiz_1[2] = (8867, 7904, 8043, X   , 5847, 6620)
-quiz_1[3] = (9207, 9775, 2812, 5630, 5266, X   )
-quiz_1[4] = (9254, 4953, X   , 5769, 5919, 5597)
-quiz_1[5] = (8776, 7751, 7361, 8850, X   , 7276)
+#examp1
+quiz_1[0] = (9612, X   , 5094, 5612, 5634, 5135)
+quiz_1[1] = (X   , 5228, 5386, 5631, 5346, 5688)
+quiz_1[2] = (9867, 5904, 5043, X   , 5847, 5620)
+quiz_1[3] = (9207, 5775, 5812, 5630, 5266, X   )
+quiz_1[4] = (9254, 5953, X   , 5769, 5919, 5597)
+quiz_1[5] = (8776, 5751, 5361, 5850, X   , 5276)
+#exampl2 
+# quiz_1[0] = (9612, X   , 5094, 7012, 5634, 5135)
+# quiz_1[1] = (X   , 1228, 5386, 7631, 5346, 9688)
+# quiz_1[2] = (9867, 2904, 5043, X   , 5847, 8620)
+# quiz_1[3] = (9207, 1775, 5812, 7630, 5266, X   )
+# quiz_1[4] = (9254, 1953, X   , 7769, 5919, 2597)
+# quiz_1[5] = (8776, 1751, 5361, 7850, X   , 1276)
+#examp3
+# quiz_1[0] = (9612, X   , 5094, 5612, 5634, 5135)
+# quiz_1[1] = (X   , 1528, 1538, 1563, 1534, 1568)
+# quiz_1[2] = (9867, 5904, 5043, X   , 5847, 5620)
+# quiz_1[3] = (9207, 5775, 5812, 5630, 5266, X   )
+# quiz_1[4] = (9254, 5953, X   , 5769, 5919, 5597)
+# quiz_1[5] = (8776, 5751, 5361, 5850, X   , 5276)
+#examp4
+# quiz_1[0] = (5612, X   , 5094, 5612, 5634, 5135)
+# quiz_1[1] = (X   , 1528, 2038, 1763, 2134, 1968)
+# quiz_1[2] = (5867, 5904, 5043, X   , 5847, 5620)
+# quiz_1[3] = (5207, 5775, 5812, 5630, 5266, X   )
+# quiz_1[4] = (5254, 5953, X   , 5769, 5919, 5597)
+# quiz_1[5] = (5776, 5751, 5361, 5850, X   , 5276)
+#examp5
+# quiz_1[0] = (5612, X   , 5094, 5612, 5634, 5135)
+# quiz_1[1] = (X   , 1128, 1038, 1263, 1134, 1268)
+# quiz_1[2] = (5867, 5904, 5043, X   , 5847, 5620)
+# quiz_1[3] = (5207, 5775, 5812, 5630, 5266, X   )
+# quiz_1[4] = (9254, 9953, X   , 9769, 8919, 9597)
+# quiz_1[5] = (5776, 5751, 5361, 5850, X   , 5276);
+#TRUE EXAMPLE
+# quiz_1[0] = (9612, X   , 8094, 5612, 6634, 5135)
+# quiz_1[1] = (X   , 5228, 6386, 3631, 3346, 1688)
+# quiz_1[2] = (8867, 7904, 8043, X   , 5847, 6620)
+# quiz_1[3] = (9207, 9775, 2812, 5630, 5266, X   )
+# quiz_1[4] = (9254, 4953, X   , 5769, 5919, 5597)
+# quiz_1[5] = (8776, 7751, 7361, 8850, X   , 7276)
+
 
 players = {}
 players_names = ["burns", "beckett", "waz", "airns", "kirk", "frew"]
@@ -119,7 +156,9 @@ plt.figure(figsize=(20,10))
 for key, player in players.items():
     
     # plot true scores
-    plt.subplot(321)
+    real = plt.subplot(321)
+    real.set_title('TRUE')
+    #real.set_xlabel('round')
     plt.plot(player.played_rounds, player.scores, label=key.format('o'), color=player.colour)
     plt.plot(player.played_rounds, player.scores, 'o', color=player.colour)
 
@@ -131,7 +170,8 @@ for key, player in players.items():
 
     
     # plot weighted scores
-    plt.subplot(322)
+    weighted = plt.subplot(322)
+    weighted.set_title('ADJUSTED')
     plt.plot(player.played_rounds, player.wscores, label=key.format('o'), color=player.colour)
     plt.plot(player.played_rounds, player.wscores, 'o', color=player.colour)
 
@@ -143,15 +183,13 @@ for key, player in players.items():
 
     plt.subplot(325)
     f_rnd = len(player.cumu_scores) - 1
-    print(player.number, player.cumu_w_scores[f_rnd])
-
-    plt.bar(player.name, player.cumu_scores)
-    plt.annotate(round(player.cumu_scores[f_rnd],2), (player.name, player.cumu_scores[f_rnd]))
+    
+    plt.bar(player.name, player.cumu_scores, color=player.colour)
+    plt.annotate(round(player.cumu_scores[f_rnd],0), (player.name, player.cumu_scores[f_rnd]))
 
     plt.subplot(326)
     f_rnd = len(player.cumu_w_scores) - 1
-    print(player.number, player.cumu_w_scores[f_rnd])
-    plt.bar(player.name, player.cumu_w_scores)
-    plt.annotate(round(player.cumu_w_scores[f_rnd],2), (player.name, player.cumu_w_scores[f_rnd]))
+    plt.bar(player.name, player.cumu_w_scores, color=player.colour)
+    plt.annotate(round(player.cumu_w_scores[f_rnd],0), (player.name, player.cumu_w_scores[f_rnd]))
 
-plt.savefig('bar.pdf')
+plt.savefig('EXAMPL1.pdf')
