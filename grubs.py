@@ -76,33 +76,43 @@ plt.rc('ytick', labelsize=BIGGER_SIZE)    # fontsize of the tick labels
 plt.rc('legend', fontsize=MEDIUM_SIZE)    # legend fontsize
 plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 X = float('nan')
+
 ####################################################################
-players_names = ["burns", "beckett", "waz", "airns", "kirk", "frew", "ash"]
-n_players = 7
-n_rounds = 2
+#players_names = ["burns", "beckett", "waz", "airns", "kirk", "frew", "ash"]
+players_names = ["graeme", "chris", "waz", "calum", "bnb"]
+n_players = 5
+n_rounds = 6
 quiz_1 = np.empty((n_rounds, 0)).tolist()
 
 #########    brns, bckt, wazz, arns, kirk, frew, ash
-filename="grubs.pdf"
+filename="quizz.pdf"
+#            greame, chrs, wax, cal, bnb
+quiz_1[0] = (1,        2,   1,   1,   6)
+quiz_1[1] = (2,        2,   1,   3,   3)
+quiz_1[2] = (6,      4,     2,  7,   8)
+quiz_1[3] = (5,       6,    6,   4,  5)
+quiz_1[4] = (13,     7,   13,   14,  12)
+quiz_1[5] = (7,      5,    5.5,  4,  6 )
 
-quiz_1[0] = (7632, 5591, 2748, 9177, 10923, X   , 4362)
-quiz_1[1] = (8853, X   , 4591, 5767, 5442, 1630, 8961)
-# quiz_1[2] = (0000, 0000, 0000, 0000, 0000, 0000, 0000)
-# quiz_1[3] = (0000, 0000, 0000, 0000, 0000, 0000, 0000)
-# quiz_1[4] = (0000, 0000, 0000, 0000, 0000, 0000, 0000)
-# quiz_1[5] = (0000, 0000, 0000, 0000, 0000, 0000, 0000)
-# quiz_1[6] = (0000, 0000, 0000, 0000, 0000, 0000, 0000)
+# quiz_1[0] = (1,      2,   1,   1,   6)
+#quiz_1[1] = (8853, X   , 4591, 5767, 5442, 1630, 8961)
+#quiz_1[2] = (X   , 6018, 5689, 4480, 3141, 4627, 1830)
+#quiz_1[3] = (8322, 8636, 4381, X   , 3813, 7478, 2733)
+#quiz_1[4] = (13342,15797,X   , 4704,10716, 9273, 8533)
+#quiz_1[5] = (7218, 4350, 5558, 2653, 6053, 4853, X   )
+#quiz_1[6] = (9967, 11001,14731,9951, X   , 11631, 7547)
 
+titles = {"graeme":"Big Graeme", "chris" : "Chris the Dish", "waz" : "Wazypoos",  "calum":"Calum and Joni", "bnb":"Bruce and Becca"}
 
-titles = {
-    "burns"   : "The Champ Champ",
-    "beckett" : "Quizzee Pascale",
-    "waz"     : "Neil The Deal",
-    "airns"   : "Marvellous Mattz",
-    "kirk"    : "Zoro",
-    "frew"    : "Cunning Chris Roberts",
-    "ash"     : "Quiz-BomB"
-}
+# titles = {
+#     "burns"   : "The Champ Champ",
+#     "beckett" : "Quizzee Pascale",
+#     "waz"     : "Neil The Deal",
+#     "airns"   : "Marvellous Mattz",
+#     "kirk"    : "Zoro",
+#     "frew"    : "Cunning Chris Roberts",
+#     "ash"     : "Quiz-BomB"
+# }
 #######################################################################
 players = {}
 for i, nm in enumerate(players_names):
@@ -113,13 +123,21 @@ for i, nm in enumerate(players_names):
     for j in range(n_rounds):
         players[name].add_score(scrs[j])
 
-players["burns"].add_colour("blue")
-players["beckett"].add_colour("red")
+# players["burns"].add_colour("blue")
+# players["beckett"].add_colour("red")
+# players["waz"].add_colour("green") # indigo
+# players["airns"].add_colour("brown") # gold
+# players["kirk"].add_colour("tab:cyan")
+# players["frew"].add_colour("magenta")
+# players["ash"].add_colour("indigo")
+
+players["graeme"].add_colour("blue")
+players["chris"].add_colour("red")
 players["waz"].add_colour("green") # indigo
-players["airns"].add_colour("brown") # gold
-players["kirk"].add_colour("tab:cyan")
-players["frew"].add_colour("magenta")
-players["ash"].add_colour("indigo")
+players["calum"].add_colour("brown") # gold
+players["bnb"].add_colour("tab:cyan")
+#players["frew"].add_colour("magenta")
+#players["ash"].add_colour("indigo")
 
 
 
@@ -156,7 +174,9 @@ for key, player in players.items():
     plt.subplot(323)
     plt.plot(player.all_rounds(), player.cumu_scores, label=player.name.format('o'), color=player.colour)
     plt.plot(player.all_rounds(), player.cumu_scores, 'o', color=player.colour)
-    plt.legend(loc=0, bbox_to_anchor=[0.275, 1.1 ])
+    #plt.legend(loc=0, bbox_to_anchor=[0.275, 1.1 ])
+    #plt.legend(loc=0, bbox_to_anchor=[0.275, 0.0 ])
+    plt.legend(loc=0)
     plt.grid(True)
     
     # plot weighted scores
@@ -177,14 +197,14 @@ for key, player in players.items():
     plt.xticks(rotation=15)
     plt.grid(True)
     plt.bar(player.name, player.cumu_scores, color=player.colour)
-    plt.annotate(round(player.cumu_scores[f_rnd],0), (player.name, player.cumu_scores[f_rnd]))
+    plt.annotate(round(player.cumu_scores[f_rnd],3), (player.name, player.cumu_scores[f_rnd]))
 
     plt.subplot(326)
     f_rnd = len(player.cumu_w_scores) - 1
     plt.xticks(rotation=15)
     plt.grid(True)
     plt.bar(player.name, player.cumu_w_scores, color=player.colour)
-    plt.annotate(round(player.cumu_w_scores[f_rnd],0), (player.name, player.cumu_w_scores[f_rnd]))
+    plt.annotate(round(player.cumu_w_scores[f_rnd],3), (player.name, player.cumu_w_scores[f_rnd]))
 
 plt.savefig(filename)
 #plt.show()
